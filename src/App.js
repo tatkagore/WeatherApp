@@ -5,7 +5,7 @@ import { Box, Stack } from "@mui/material";
 import Forecast from "./components/Forecast";
 
 function App() {
-  const [forecast, setForecast] = React.useState([]);
+  const [city, setCity] = React.useState(null);
 
   return (
     <Stack
@@ -17,8 +17,8 @@ function App() {
         justifyContent: "center",
       }}
     >
-      <Search setForecast={setForecast} />
-      <Forecast forecast={forecast} />
+      <Search setCity={setCity} />
+      <Forecast city={city} />
     </Stack>
   );
 }
