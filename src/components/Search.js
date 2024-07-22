@@ -4,7 +4,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { debounce } from "lodash";
 import { Box } from "@mui/material";
 
-export default function Search() {
+export default function Search({ setForecast }) {
   const [cities, setCities] = React.useState([]);
   const [inputValue, setInputValue] = React.useState("");
 
@@ -45,6 +45,25 @@ export default function Search() {
     };
   }, [debouncedFetchCities]);
 
+  const handleSelectCity = async (_, value) => {
+    if (value) {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${value.latitude}&longitude=${value.longitude}&hourly=temperature_2m`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
+
+        const json = await response.json();
+        console.log(json);
+        setForecast(json.results || []);
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+  };
+
   return (
     <Autocomplete
       disablePortal
@@ -52,6 +71,7 @@ export default function Search() {
       sx={{ width: 300 }}
       renderInput={(params) => <TextField {...params} label="Search a city" />}
       onInputChange={handleSearchChange}
+      onChange={handleSelectCity}
       getOptionLabel={(option) => option.name || ""}
       renderOption={(props, option) => {
         delete props.key;

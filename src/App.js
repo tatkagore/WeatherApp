@@ -1,11 +1,14 @@
-import logo from "./logo.svg";
+import * as React from "react";
 import "./App.css";
 import Search from "./components/Search";
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
+import Forecast from "./components/Forecast";
 
 function App() {
+  const [forecast, setForecast] = React.useState([]);
+
   return (
-    <Box
+    <Stack
       sx={{
         width: "100%",
         height: "100%",
@@ -14,8 +17,9 @@ function App() {
         justifyContent: "center",
       }}
     >
-      <Search />
-    </Box>
+      <Search setForecast={setForecast} />
+      <Forecast forecast={forecast} />
+    </Stack>
   );
 }
 
