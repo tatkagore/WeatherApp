@@ -5,29 +5,25 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
-
-export default function CurrentForecast({ city }) {
-  if (!city) {
+export default function CurrentForecast({ city, forecast }) {
+  if (!city || !forecast) {
     return null;
   }
+
+  const currentWeather = forecast.current_weather;
+
   return (
     <div>
       <Stack direction="column" spacing={2}>
-        <Typography variant="h6">{city.name} </Typography>
+        <Typography variant="h4">{city.name}</Typography>
 
         <Stack direction="row" spacing={2} alignItems="center">
-          <Typography variant="h6">Horizontal Stack Text</Typography>
+          <Typography variant="h4">{currentWeather.temperature} °C</Typography>
           <Box
             sx={{ width: "50px", height: "50px" }}
             component="img"
             src="sun.png"
+            alt="Weather Icon"
           />
         </Stack>
       </Stack>

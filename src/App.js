@@ -9,7 +9,7 @@ function App() {
   const [city, setCity] = React.useState(null);
 
   return (
-    <Stack
+    <Stack spacing={4}
       sx={{
         width: "100%",
         height: "100%",

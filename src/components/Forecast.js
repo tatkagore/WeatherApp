@@ -4,11 +4,11 @@ import { Stack } from "@mui/material";
 import CurrentForecast from "./CurrentForecast";
 
 export default function Forecast({ city }) {
-  const [forecast, setForecast] = React.useState([]);
+  const [forecast, setForecast] = React.useState(null);
 
   const findCity = async () => {
     if (city) {
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.latitude}&longitude=${city.longitude}&hourly=temperature_2m`;
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.latitude}&longitude=${city.longitude}&hourly=temperature_2m&current_weather=true`;
 
       try {
         const response = await fetch(url);
@@ -34,7 +34,7 @@ export default function Forecast({ city }) {
 
   return (
     <Stack direction={"column"}>
-      <CurrentForecast city={city} />
+      <CurrentForecast city={city} forecast={forecast} />
 
       <Stack
         width={200}
