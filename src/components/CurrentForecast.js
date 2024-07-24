@@ -4,6 +4,7 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
+import { weatherIcons } from "./WeatherIcons";
 
 export default function CurrentForecast({ city, forecast }) {
   if (!city || !forecast) {
@@ -11,6 +12,7 @@ export default function CurrentForecast({ city, forecast }) {
   }
 
   const currentWeather = forecast.current_weather;
+  const weatherIcon = weatherIcons[currentWeather.weathercode];
 
   return (
     <div>
@@ -22,7 +24,7 @@ export default function CurrentForecast({ city, forecast }) {
           <Box
             sx={{ width: "50px", height: "50px" }}
             component="img"
-            src="sun.png"
+            src={weatherIcon}
             alt="Weather Icon"
           />
         </Stack>
