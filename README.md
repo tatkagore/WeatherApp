@@ -2,6 +2,8 @@
 
 This is a simple weather forecast application built with React and Material-UI. The application allows users to search for a city and view the current weather as well as the hourly forecast for that city.
 
+[To test the app 🌦️](https://tatkagore.github.io/WeatherApp/)
+
 ## Features
 
     •	Search for a city to get weather information.
