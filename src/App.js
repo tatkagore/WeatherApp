@@ -3,6 +3,7 @@ import "./App.css";
 import Search from "./components/Search";
 import { Box, Stack } from "@mui/material";
 import Forecast from "./components/Forecast";
+import CurrentForecast from "./components/CurrentForecast";
 
 function App() {
   const [city, setCity] = React.useState(null);
