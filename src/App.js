@@ -1,42 +1,30 @@
-import * as React from "react";
 import "./App.css";
-import Search from "./components/Search";
-import { Box, Stack } from "@mui/material";
-import Forecast from "./components/Forecast";
+import { Route, Routes, Outlet, Link } from "react-router-dom";
+import Home from "./pages/Home";
 
 function App() {
-  const [city, setCity] = React.useState(null);
-
   return (
-    <Box
-      sx={{
-        width: "100vw",
-        height: "100vh", 
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#5c6bc0",
-        padding: 2,
-      }}
-    >
-      <Box
-        sx={{
-          width: "80%", 
-          padding: 4,
-          backgroundColor: "#ffffff",
-          borderRadius: 4,
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Stack spacing={4} sx={{ width: "100%" }}>
-          <Search setCity={setCity} />
-          <Forecast city={city} />
-        </Stack>
-      </Box>
-    </Box>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="*" element={<NoMatch />} />
+      </Route>
+    </Routes>
+  );
+}
+
+function Layout() {
+  return <Outlet />;
+}
+
+function NoMatch() {
+  return (
+    <div>
+      <h2>Nothing to see here!</h2>
+      <p>
+        <Link to="/">Go to the home page</Link>
+      </p>
+    </div>
   );
 }
 
