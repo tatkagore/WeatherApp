@@ -5,11 +5,9 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 
-const basename = document.querySelector("base").getAttribute("href") || "/";
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter basename={basename}>
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </React.StrictMode>,
