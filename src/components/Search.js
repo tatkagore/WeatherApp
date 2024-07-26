@@ -57,12 +57,12 @@ export default function Search({ setCity }) {
 
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
-      <Box component="img" src="/weather_news.png" width={40} />
+      <Box component="img" src="./weather_news.png" width={40} />
       <Typography variant="h6">Easy Weather</Typography>
       <Autocomplete
         disablePortal
         options={cities}
-        sx={{ width: 500 }}
+        sx={{ width: 500, backgroundColor: "#e8eaf6" }}
         renderInput={(params) => (
           <TextField {...params} label="Search for cities" />
         )}
@@ -92,7 +92,7 @@ export default function Search({ setCity }) {
         }}
       />
 
-      <FormControlLabel control={<Switch defaultChecked />} label="Label" />
+      <FormControlLabel control={<Switch defaultChecked />} label="" />
 
     </Stack>
   );

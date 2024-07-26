@@ -22,7 +22,7 @@ export default function CurrentForecast({ city, forecast }) {
           <Box
             sx={{ width: "50px", height: "50px" }}
             component="img"
-            src={weatherIcon}
+            src={`./${weatherIcon}`}
             alt="Weather Icon"
           />
         </Stack>
