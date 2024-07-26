@@ -2,7 +2,13 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { debounce } from "lodash";
-import { Box, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  FormControlLabel,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { Switch } from "./Switch";
 
 export default function Search({ setCity }) {
   const [cities, setCities] = React.useState([]);
@@ -52,13 +58,13 @@ export default function Search({ setCity }) {
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
       <Box component="img" src="/weather_news.png" width={40} />
-      <Typography variant="h6">Weather Search</Typography>
+      <Typography variant="h6">Easy Weather</Typography>
       <Autocomplete
         disablePortal
         options={cities}
         sx={{ width: 500 }}
         renderInput={(params) => (
-          <TextField {...params} label="Search a city" />
+          <TextField {...params} label="Search for cities" />
         )}
         onInputChange={handleSearchChange}
         onChange={handleSelectCity}
@@ -85,6 +91,9 @@ export default function Search({ setCity }) {
           );
         }}
       />
+
+      <FormControlLabel control={<Switch defaultChecked />} label="Label" />
+
     </Stack>
   );
 }
