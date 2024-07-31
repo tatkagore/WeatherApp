@@ -2,6 +2,7 @@ import * as React from "react";
 import { Stack, Typography } from "@mui/material";
 import CurrentForecast from "./CurrentForecast";
 import HourlyForecast from "./HourlyForecast";
+import { weatherIcons } from "./WeatherIcons";
 
 // Main component to display the forecast information
 export default function Forecast({ city }) {
@@ -10,7 +11,8 @@ export default function Forecast({ city }) {
   const findCity = async () => {
     if (city) {
       // Construct the URL for the API request
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.latitude}&longitude=${city.longitude}&hourly=temperature_2m&current_weather=true`;
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.latitude}&longitude=${city.longitude}&hourly=temperature_2m,weather_code&current_weather=true
+      `;
 
       try {
         // Fetch data from the API
@@ -56,9 +58,11 @@ export default function Forecast({ city }) {
     // Get hourly temperatures and times from the forecast data
     const hourlyTemperatures = forecast.hourly.temperature_2m;
     const hourlyTimes = forecast.hourly.time;
+    const hourlyWeatherCodes = forecast.hourly.weather_code;
 
     console.log("Hourly times:", hourlyTimes);
     console.log("Hourly temperatures:", hourlyTemperatures);
+    console.log("Hourly codes:", hourlyWeatherCodes);
 
     // Map over the hourly times and create an array of hourly data
     const hourlyData = hourlyTimes
@@ -76,6 +80,7 @@ export default function Forecast({ city }) {
           return {
             time: timeStr,
             temperature: hourlyTemperatures[index],
+            icon: weatherIcons[hourlyWeatherCodes[index]],
           };
         }
 

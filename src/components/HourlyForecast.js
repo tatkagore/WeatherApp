@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Stack, Box, Typography } from "@mui/material";
+import { weatherIcons } from "./WeatherIcons";
+
 
 export default function HourlyForecast({ hourlyData }) {
   if (!hourlyData || hourlyData.length === 0) {
@@ -20,6 +22,12 @@ export default function HourlyForecast({ hourlyData }) {
         >
           <Typography variant="body2">{hour.time}</Typography>
           <Typography variant="h6">{hour.temperature} °C</Typography>
+          <Box
+            sx={{ width: "50px", height: "50px" }}
+            component="img"
+            src={`./${hour.icon}`}
+            alt="Weather Icon"
+          />
         </Box>
       ))}
     </Stack>
