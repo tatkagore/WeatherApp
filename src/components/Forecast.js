@@ -3,6 +3,7 @@ import { Stack, Typography } from "@mui/material";
 import CurrentForecast from "./CurrentForecast";
 import HourlyForecast from "./HourlyForecast";
 import { weatherIcons } from "./WeatherIcons";
+import WeatherDetails from "./WeatherDetails";
 
 // Main component to display the forecast information
 export default function Forecast({ city }) {
@@ -11,9 +12,7 @@ export default function Forecast({ city }) {
   const findCity = async () => {
     if (city) {
       // Construct the URL for the API request
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.latitude}&longitude=${city.longitude}&hourly=temperature_2m,weather_code&current_weather=true
-      `;
-
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.latitude}&longitude=${city.longitude}&hourly=temperature_2m,weather_code&current_weather=true&daily=sunrise,sunset,daylight_duration,uv_index_max,precipitation_probability_max,windspeed_10m_max&timezone=auto`;
       try {
         // Fetch data from the API
         const response = await fetch(url);
@@ -26,7 +25,6 @@ export default function Forecast({ city }) {
         const json = await response.json();
         // Update the state with the fetched data
         setForecast(json || []);
-        console.log("Fetched forecast data:", json);
       } catch (error) {
         // Log any errors to the console
         console.error(error.message);
@@ -88,12 +86,52 @@ export default function Forecast({ city }) {
       })
       .filter((t) => t !== null); // Filter out null values
 
-    console.log("Hourly data for the next 24 hours:", hourlyData);
     return hourlyData;
   };
 
   // Get the hourly data for the next 24 hours
   const hourlyData = getHourlyDataForNext24Hours();
+
+  // Function to get weather details
+  const getWeatherDetails = () => {
+    if (!forecast || !forecast.daily) {
+      console.log("No forecast or daily data available");
+      return {};
+    }
+
+    const sunriseHour = new Date(forecast.daily.sunrise[0]).toLocaleTimeString(
+      [],
+      {
+        hour: "2-digit",
+        minute: "2-digit",
+      },
+    );
+
+    const sunsetHour = new Date(forecast.daily.sunset[0]).toLocaleTimeString(
+      [],
+      {
+        hour: "2-digit",
+        minute: "2-digit",
+      },
+    );
+
+    const daylightDuration = new Date(forecast.daily.daylight_duration[0] * 1000)
+      .toISOString()
+      .substring(11, 16);
+
+    const weatherDetails = {
+      sunrise: sunriseHour,
+      sunset: sunsetHour,
+      wind: forecast.daily.windspeed_10m_max[0],
+      uvIndex: forecast.daily.uv_index_max[0],
+      chancesOfRain: forecast.daily.precipitation_probability_max[0],
+      daylightDuration: daylightDuration,
+    };
+
+    return weatherDetails;
+  };
+
+  const weatherDetails = getWeatherDetails();
 
   return (
     <Stack direction={"column"}>
@@ -111,6 +149,9 @@ export default function Forecast({ city }) {
         <Typography variant="h6">Today's Forecast</Typography>
         <Stack width={"100%"} direction={"column"} sx={{ overflowX: "auto" }}>
           <HourlyForecast hourlyData={hourlyData} />
+        </Stack>
+        <Stack width={"100%"} direction={"column"}>
+          <WeatherDetails weatherDetails={weatherDetails} />
         </Stack>
       </Stack>
     </Stack>
