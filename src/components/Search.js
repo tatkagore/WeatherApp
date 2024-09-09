@@ -2,15 +2,10 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { debounce } from "lodash";
-import {
-  Box,
-  FormControlLabel,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, FormControlLabel, Stack, Typography } from "@mui/material";
 import { Switch } from "./Switch";
 
-export default function Search({ setCity }) {
+export default function Search({ setCity, unit, toggleUnit }) {
   const [cities, setCities] = React.useState([]);
   const [inputValue, setInputValue] = React.useState("");
 
@@ -71,7 +66,6 @@ export default function Search({ setCity }) {
         getOptionLabel={(option) => option.name || ""}
         renderOption={(props, option) => {
           delete props.key;
-
           return (
             <Box
               key={`${option.name}-${option.id}`}
@@ -91,9 +85,11 @@ export default function Search({ setCity }) {
           );
         }}
       />
-
-      <FormControlLabel control={<Switch defaultChecked />} label="" />
-
+      {/* Switch to toggle between Celsius and Fahrenheit */}
+      <FormControlLabel
+        control={<Switch checked={unit === "F"} onChange={toggleUnit} />}
+        label={unit === "F" ? "°F" : "°C"}
+      />
     </Stack>
   );
 }
